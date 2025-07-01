@@ -46,3 +46,34 @@ Built to help racers upload, compare, and visualize their lap data using maps, a
 cd backend/OpenRaceView.API
 dotnet ef database update
 dotnet run
+````
+### 2. Frontend
+```bash
+Copy
+Edit
+cd frontend
+npm install
+npm run dev
+```
+
+### 3. Access
+Open the frontend: http://localhost:5173
+API runs at: http://localhost:5000 (adjust as needed)
+
+## 🛤️ Roadmap
+ Track detection & map overlays
+
+ Lap alignment via GPS or sector timing
+
+ Video + telemetry sync
+
+ Social sharing & lap comparison
+
+## 🤝 Contributing
+Contributions are welcome! Open an issue or submit a pull request.
+
+## 📄 License
+MIT License – see LICENSE
+
+## 📸 Screenshots
+Coming soon...
