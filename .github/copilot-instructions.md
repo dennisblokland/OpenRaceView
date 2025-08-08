@@ -21,6 +21,7 @@ Concise, project-specific guidance so an AI agent can be productive quickly. Foc
 - Add new endpoints via a controller in `OpenRaceView.API/Controllers/*Controller.cs` mapping to MediatR handlers (once MediatR wired).
 - DTO naming: *Request (input), *Dto (output), Commands/Queries: Verb + Entity (e.g., `CreateLapCommand`).
 - Validation: Prefer FluentValidation or manual guard clauses in handler; return 400 for invalid payloads.
+- **Explicit typing**: Do not use `var` keyword - always use explicit type declarations for clarity.
 
 ## 4. Lap Persistence Implementation Pointers
 When implementing the lap feature:
