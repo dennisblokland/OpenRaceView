@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenRaceView.Domain\OpenRaceView.Domain.csproj" />
+    <ProjectReference Include="..\OpenRaceView.Infrastructure\OpenRaceView.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
