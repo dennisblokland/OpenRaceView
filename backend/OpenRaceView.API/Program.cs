@@ -3,13 +3,14 @@ using OpenRaceView.Infrastructure.Data;
 using OpenRaceView.Application.Commands.Laps;
 using MediatR;
 using System.Reflection;
+using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 
 // Configure database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -17,7 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         ?? "Data Source=laps.db"));
 
 // Configure MediatR
-builder.Services.AddMediatR(typeof(CreateLapCommand).Assembly);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateLapCommand).Assembly));
 
 // Configure options
 builder.Services.Configure<TelemetryOptions>(
@@ -28,8 +29,8 @@ WebApplication app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
     
     // Auto-migrate database in development
     using IServiceScope scope = app.Services.CreateScope();
