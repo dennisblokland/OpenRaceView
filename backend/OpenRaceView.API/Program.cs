@@ -1,24 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using OpenRaceView.Infrastructure.Data;
-using OpenRaceView.Application.Commands.Laps;
-using MediatR;
+using OpenRaceView.API.Configuration;
 using System.Reflection;
 using Scalar.AspNetCore;
+using FastEndpoints;
+using FastEndpoints.Swagger;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
+builder.Services.AddFastEndpoints();
+builder.Services.SwaggerDocument();
+builder.Services.AddAuthorization();
 
 // Configure database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") 
         ?? "Data Source=laps.db"));
-
-// Configure MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateLapCommand).Assembly));
 
 // Configure options
 builder.Services.Configure<TelemetryOptions>(
@@ -29,7 +27,7 @@ WebApplication app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwaggerGen();
     app.MapScalarApiReference();
     
     // Auto-migrate database in development
@@ -39,9 +37,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-app.MapControllers();
+app.UseFastEndpoints();
 
 app.Run();
