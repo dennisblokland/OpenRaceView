@@ -1,0 +1,6 @@
+@OpenRaceView.API_HostAddress = http://localhost:5293
+
+GET {{OpenRaceView.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
