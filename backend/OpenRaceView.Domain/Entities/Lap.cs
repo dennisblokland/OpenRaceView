@@ -47,7 +47,7 @@ public class Lap
 
     public void AddSamples(IEnumerable<LapSample> samples, int maxSamplesPerLap)
     {
-        var sampleList = samples.ToList();
+        List<LapSample> sampleList = samples.ToList();
         
         if (!sampleList.Any())
             throw new ArgumentException("Samples cannot be empty");

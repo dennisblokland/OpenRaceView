@@ -24,10 +24,10 @@ public class LapsController : ControllerBase
     {
         try
         {
-            var command = new CreateLapCommand(request);
-            var result = await _mediator.Send(command);
+            CreateLapCommand command = new CreateLapCommand(request);
+            CreateLapResponse result = await _mediator.Send(command);
             
-            var locationUri = Url.Action(nameof(GetLap), new { id = result.Id });
+            string? locationUri = Url.Action(nameof(GetLap), new { id = result.Id });
             return Created(locationUri, result);
         }
         catch (ArgumentException ex)
@@ -47,8 +47,8 @@ public class LapsController : ControllerBase
     {
         try
         {
-            var query = new GetLapListQuery();
-            var result = await _mediator.Send(query);
+            GetLapListQuery query = new GetLapListQuery();
+            List<LapListItemDto> result = await _mediator.Send(query);
             return Ok(result);
         }
         catch (Exception ex)
@@ -63,8 +63,8 @@ public class LapsController : ControllerBase
     {
         try
         {
-            var query = new GetLapDetailQuery(id, includeSamples);
-            var result = await _mediator.Send(query);
+            GetLapDetailQuery query = new GetLapDetailQuery(id, includeSamples);
+            LapDetailDto? result = await _mediator.Send(query);
             
             if (result == null)
                 return NotFound();

@@ -5,32 +5,6 @@ using OpenRaceView.Infrastructure.Data;
 
 namespace OpenRaceView.Application.Queries.Laps;
 
-public class GetLapListQueryHandler : IRequestHandler<GetLapListQuery, List<LapListItemDto>>
-{
-    private readonly ApplicationDbContext _context;
-
-    public GetLapListQueryHandler(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<List<LapListItemDto>> Handle(GetLapListQuery request, CancellationToken cancellationToken)
-    {
-        return await _context.Laps
-            .OrderByDescending(l => l.StartTimeUtc)
-            .Select(l => new LapListItemDto
-            {
-                Id = l.Id,
-                TrackName = l.TrackName,
-                StartTimeUtc = l.StartTimeUtc,
-                DurationMs = l.DurationMs,
-                SampleCount = l.SampleCount,
-                CreatedUtc = l.CreatedUtc
-            })
-            .ToListAsync(cancellationToken);
-    }
-}
-
 public class GetLapDetailQueryHandler : IRequestHandler<GetLapDetailQuery, LapDetailDto?>
 {
     private readonly ApplicationDbContext _context;
@@ -42,14 +16,14 @@ public class GetLapDetailQueryHandler : IRequestHandler<GetLapDetailQuery, LapDe
 
     public async Task<LapDetailDto?> Handle(GetLapDetailQuery request, CancellationToken cancellationToken)
     {
-        var query = _context.Laps.AsQueryable();
+        IQueryable<OpenRaceView.Domain.Entities.Lap> query = _context.Laps.AsQueryable();
 
         if (request.IncludeSamples)
         {
             query = query.Include(l => l.Samples.OrderBy(s => s.Index));
         }
 
-        var lap = await query.FirstOrDefaultAsync(l => l.Id == request.Id, cancellationToken);
+        OpenRaceView.Domain.Entities.Lap? lap = await query.FirstOrDefaultAsync(l => l.Id == request.Id, cancellationToken);
 
         if (lap == null)
             return null;

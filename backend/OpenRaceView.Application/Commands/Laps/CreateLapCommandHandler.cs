@@ -19,7 +19,7 @@ public class CreateLapCommandHandler : IRequestHandler<CreateLapCommand, CreateL
 
     public async Task<CreateLapResponse> Handle(CreateLapCommand request, CancellationToken cancellationToken)
     {
-        var req = request.Request;
+        CreateLapRequest req = request.Request;
 
         // Validate request
         if (string.IsNullOrWhiteSpace(req.TrackName))
@@ -38,7 +38,7 @@ public class CreateLapCommandHandler : IRequestHandler<CreateLapCommand, CreateL
             throw new ArgumentException($"Cannot exceed {_telemetryOptions.MaxSamplesPerLap} samples per lap");
 
         // Create lap entity
-        var lap = Lap.Create(
+        Lap lap = Lap.Create(
             req.Source,
             req.TrackName,
             req.StartTimeUtc,
@@ -46,7 +46,7 @@ public class CreateLapCommandHandler : IRequestHandler<CreateLapCommand, CreateL
             req.DistanceMeters);
 
         // Convert and validate samples
-        var samples = req.Samples.Select(s => LapSample.Create(
+        List<LapSample> samples = req.Samples.Select(s => LapSample.Create(
             s.T,
             s.Lat,
             s.Lon,
