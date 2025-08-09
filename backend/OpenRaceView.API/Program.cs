@@ -4,13 +4,11 @@ using OpenRaceView.API.Configuration;
 using System.Reflection;
 using Scalar.AspNetCore;
 using FastEndpoints;
-using FastEndpoints.Swagger;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddFastEndpoints();
-builder.Services.SwaggerDocument();
 builder.Services.AddAuthorization();
 
 // Configure database
@@ -27,7 +25,6 @@ WebApplication app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerGen();
     app.MapScalarApiReference();
     
     // Auto-migrate database in development
