@@ -41,7 +41,7 @@ Built to help racers upload, compare, and visualize their lap data using maps, a
 ## 📦 Getting Started
 
 ### Requirements
-- .NET 8 SDK
+- .NET 9 SDK
 - Node.js 18+
 - (PostgreSQL optional - using SQLite by default)
 
