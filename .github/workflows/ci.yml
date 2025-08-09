@@ -32,10 +32,10 @@ jobs:
     - name: Test
       run: |
         if find . -name "*.Test*.csproj" -o -name "*Test*.csproj" | grep -q .; then
-          echo "Test projects found, running tests..."
+          echo "✓ Test projects found, running tests..."
           dotnet test --no-build --configuration Release --verbosity normal
         else
-          echo "No test projects found, skipping tests"
+          echo "ℹ No test projects found, skipping tests"
         fi
 
   frontend:
@@ -68,8 +68,8 @@ jobs:
     - name: Test
       run: |
         if npm run | grep -q "test"; then
-          echo "Test script found, running tests..."
+          echo "✓ Test script found, running tests..."
           npm test
         else
-          echo "No test script found, skipping tests"
+          echo "ℹ No test script found, skipping tests"
         fi
