@@ -75,7 +75,8 @@ public class CreateLap : Endpoint<CreateLapRequest, CreateLapResponse>
         await _context.SaveChangesAsync(ct);
 
         // Set location header and return 201 Created
-        await SendAsync(new CreateLapResponse { Id = lap.Id }, 201, ct);
+        await Send.OkAsync(new CreateLapResponse { Id = lap.Id }, ct);
+   
         HttpContext.Response.Headers.Location = $"/api/laps/{lap.Id}";
     }
 }

@@ -41,6 +41,6 @@ public class GetLapList : EndpointWithoutRequest<List<LapListItemDto>>
             })
             .ToListAsync(ct);
 
-        await SendOkAsync(result, ct);
+        await Send.OkAsync(result, ct);
     }
 }
