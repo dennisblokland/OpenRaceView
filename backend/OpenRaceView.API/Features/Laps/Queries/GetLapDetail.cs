@@ -46,7 +46,7 @@ public class GetLapDetail : Endpoint<GetLapDetailRequest, LapDetailDto>
 
         if (lap == null)
         {
-            await SendNotFoundAsync(ct);
+            await Send.NotFoundAsync(ct);
             return;
         }
 
@@ -75,6 +75,6 @@ public class GetLapDetail : Endpoint<GetLapDetailRequest, LapDetailDto>
                 : null
         };
 
-        await SendOkAsync(result, ct);
+        await Send.OkAsync(result, ct);
     }
 }
